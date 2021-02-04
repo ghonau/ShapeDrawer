@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div class="row">
+    <div class="col-lg-8 input">
+        <div class="form-group">
+            <label for="DrawingLine">
+                Type what you want to draw
+            </label>
+            <input id="drawingLine" class="form-control" />
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-8 input">
+        <button class="btn bg-primary draw">Draw</button>
+        <button class="btn bg-info clear">Clear</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 canvas-container">
+        <canvas width="600" height="400" class="canvas"></canvas>
+    </div>
+</div>
+
+
+@section Scripts{
+    @Scripts.Render("~/bundles/shapeDrawer")
+    @Scripts.Render("~/bundles/shapes")
+    @Scripts.Render("~/bundles/bootbox")
+
+    <script>
+        var context = {
+            'selector': 'canvas',
+            'xCenter': 300,
+            'yCenter': 200,
+            'maxSize': 200,
+            'strokeStyle': 'white',
+            'fillStyle': 'lightblue'
+        };
+
+        $(document).ready(function () {
+
+            $('button.clear').click(function () {
+                $('#drawingLine').val('');
+            });
+
+            $('button.draw').click(function () {
+                var command = $('#drawingLine').val();
+                var shapeDrawer = new ShapeDrawer(context);
+                shapeDrawer.draw(command);
+            })
+        });
+
+    </script>
+}
